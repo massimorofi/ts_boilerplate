@@ -20,9 +20,10 @@ var settings = {
     distdir: './dist',
     css: {
         source: [
-            './src/scss/**/*.{scss, sass, css}'
+            'node_modules/bootstrap/dist/css/bootstrap.min.css',
+            './src/scss/**/*.{scss,sass,css}'
         ],
-        dest: './dist/css'
+        dest: ''
     },
     html: {
         watch: './src/**/*.html',
@@ -41,7 +42,13 @@ var settings = {
         dest: ''
     },
     js: {
-        source: ['src/**/*.ts'],
+        vendor: 'dist/libs/',
+        libs: [
+            'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/popper.js/dist/umd/popper.min.js',
+            'node_modules/bootstrap/dist/js/bootstrap.min.js'
+        ],
+        libdest: [],
         monitor: ['src/**/*.ts'],
         entry: './src/js/main.ts',
         output: 'bundle.js',
@@ -53,15 +60,20 @@ settings.css.dest = settings.distdir + '/css';
 settings.js.dest = settings.distdir + '/js';
 settings.html.dest = settings.distdir + '/html';
 settings.assets.dest = settings.distdir + '/';
-
-
+// add libaries to the dist list with the porder given in settings.js.libs
+for (let i = 0; i < settings.js.libs.length; i++) {
+    var lib = settings.js.libs[i];
+    var res = lib.split("/");
+    settings.js.libdest[i] = settings.js.vendor + res[res.length - 1];
+};
+console.log(settings.js.libdest);
 
 // ############### TASKS DEFINITION 
 
 //--------------------------------------
 //    Task: CopyData
 //--------------------------------------
-gulp.task('copyData', () => gulp.src(settings.assets.source).pipe(gulp.dest(settings.assets.dest)));
+gulp.task('copyData', () => gulp.src(settings.assets.source).pipe(gulp.dest(settings.distdir)));
 
 
 
@@ -91,27 +103,18 @@ gulp.task('move', () => {
 
 gulp.task('css', () => {
     return gulp
-        .src(settings.css.source)
-        .pipe(gulp.dest(settings.css.dest)) // Pipe unminified
-})
-
-
-gulp.task('css:watch', () => {
-    return plugins
-        .watchSass(settings.css.source, {
-            includePaths: ['node_modules'],
-            verbose: true
-        })
-        .pipe(
+        .src(settings.css.source).pipe(
             plugins
                 .sass({
                     includePaths: ['node_modules']
                 })
                 .on('error', plugins.sass.logError)
-        )
-        .pipe(plugins.autoprefixer())
-        .pipe(gulp.dest(settings.css.dest))
-        .pipe(plugins.browserSync.reload({ stream: true }))
+        ).pipe(gulp.dest(settings.css.dest)) // Pipe unminified
+})
+
+
+gulp.task('css:watch', () => {
+    gulp.watch(settings.css.source, gulp.series('css'));
 });
 
 // -------------------------------------
@@ -120,7 +123,7 @@ gulp.task('css:watch', () => {
 
 gulp.task('html', () => {
     // sources to inject script/link tags for
-    const source = gulp.src([`${settings.css.dest}/*.min.css`, `${settings.js.dest}/*.min.js`])
+    const source = gulp.src([`${settings.css.dest}/*.css`, `${settings.js.dest}/*.js`].concat(settings.js.libdest))
 
     return gulp
         .src(settings.html.source)
@@ -149,7 +152,7 @@ gulp.task('html:format', () => {
         .pipe(gulp.dest('src'))
 })
 
-gulp.task('html:watch', () => gulp.watch(settings.html.watch, gulp.series('html')))
+gulp.task('html:watch', () => gulp.watch(settings.html.watch, gulp.series('move','html')))
 
 //--------------------------------------
 //    Task: js
@@ -175,7 +178,12 @@ function js() {
         .pipe(gulp.dest(settings.js.dest));
 };
 gulp.task('js', js);
-gulp.task('js:watch', () => gulp.watch(settings.js.source, gulp.series('js')));
+gulp.task('js:watch', () => gulp.watch(settings.js.monitor, gulp.series('js')));
+gulp.task('jslibs', () =>
+    gulp
+        .src(settings.js.libs)
+        .pipe(gulp.dest(settings.js.vendor))
+);
 
 // -------------------------------------
 //   Task: Images
@@ -209,7 +217,7 @@ gulp.task('images:watch', () =>
 //    Task: BUILD ...default
 //--------------------------------------
 function build() {
-    return gulp.series('clean', gulp.parallel('copyData','html', 'js', 'move', 'css'), 'images');
+    return gulp.series('clean', gulp.parallel('copyData', 'jslibs', 'js', 'move', 'css'), 'html', 'images');
 }
 gulp.task('default', build());
 
