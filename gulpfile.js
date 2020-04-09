@@ -15,7 +15,10 @@ var plugins = require('gulp-load-plugins')({
 
 
 
-
+/**
+ * ###############################################################
+ * Project setting, directories and include files are defined here
+ */
 var settings = {
     distdir: './dist',
     css: {
