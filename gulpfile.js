@@ -200,11 +200,7 @@ gulp.task('images', () =>
 
 
 gulp.task('images:watch', () =>
-    gulp.watch('src/img/**/*').on('change', path => {
-        gulp
-            .src(path)
-            .pipe(gulp.dest('dist/img'))
-    })
+    gulp.watch('src/img/**/*', gulp.series('images'))
 );
 
 
