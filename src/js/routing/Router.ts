@@ -50,8 +50,8 @@ export class Router {
      * @param parent of the remove element 
      */
     static removeRow(parent: string) {
-        const node = document.getElementById(parent);
-        node.removeChild(node.firstChild);
+        const node = '#' + parent;
+        $(node).empty();
     }
 
     /**
