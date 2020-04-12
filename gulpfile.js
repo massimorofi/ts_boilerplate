@@ -203,14 +203,6 @@ gulp.task('images:watch', () =>
     gulp.watch('src/img/**/*').on('change', path => {
         gulp
             .src(path)
-            .pipe(
-                plugins.imagemin([
-                    plugins.imagemin.optipng({ optimizationLevel: 3 }),
-                    plugins.imagemin.svgo({
-                        plugins: [{ removeViewBox: false }]
-                    })
-                ])
-            )
             .pipe(gulp.dest('dist/img'))
     })
 );

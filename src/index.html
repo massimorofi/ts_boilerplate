@@ -15,27 +15,23 @@
     <!--END TEST-->
     <div class="container-fluid">
         <div class="row">
-            <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-                <a class="navbar-brand" href="#"></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-link">
-                            <a class="nav-item " href="#" id="pagea"> One</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" href="#" id="pageb"> Two </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" href="#" id="pagec"> Three </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" id="close-btn">&times;</a>
+                <a href="#">About</a>
+                <a href="#" id="pagea">Example A</a>
+                <a href="#" id="pageb">Example B</a>
+                <a href="#" id="pagec">Example C</a>
+            </div>
+            <!-- Use any element to open the sidenav -->
+            <button id="open-btn">
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" width="12" height="16">
+                        <path fill-rule="evenodd"
+                            d="M11.41 9H.59C0 9 0 8.59 0 8c0-.59 0-1 .59-1H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1h.01zm0-4H.59C0 5 0 4.59 0 4c0-.59 0-1 .59-1H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1h.01zM.59 11H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1H.59C0 13 0 12.59 0 12c0-.59 0-1 .59-1z">
+                        </path>
+                    </svg>
+                </span>
+            </button>
         </div>
         <br>
         <div class="row" id="panel">

@@ -13,10 +13,22 @@ function addSections() {
     r.addRoute('pagec', 'panel', 'html/c.html', null);
 }
 
+var open = false;
+/* Set the width of the side navigation to 0 */
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+
 function main() {
     addSections();
-
-
+    // set eventlisteners
+    document.getElementById('open-btn').addEventListener('click', () => { openNav() });
+    document.getElementById('close-btn').addEventListener('click', () => { closeNav() });
+    document.getElementById('mySidenav').addEventListener('click', () => { closeNav() });
 }
 
 // run main function
