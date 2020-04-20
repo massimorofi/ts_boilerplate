@@ -11,7 +11,9 @@ export class Router {
      * @param source route ID (can be the same IT fo the HTL element that is clicked)
      * Load HTML Portion
      */
-    route(source: string) {
+    async route(source: string) {
+        //console.log(source);
+        //console.log(this.map)
         var r = this.map.get(source);
         var fileName = r.path;
         var xobj = new XMLHttpRequest();
@@ -19,7 +21,7 @@ export class Router {
         xobj.overrideMimeType('text/html');
         xobj.setRequestHeader('Access-Control-Allow-Credentials', 'true');
         xobj.setRequestHeader('Access-Control-Allow-Origin', '*');
-        xobj.setRequestHeader('Access-Control-Allow-Methods', 'GET');
+        xobj.setRequestHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
         xobj.setRequestHeader('Access-Control-Allow-Headers', 'text/html');
         xobj.onreadystatechange = function () {
             if (xobj.readyState == 4 && xobj.status == 200) {
@@ -60,8 +62,7 @@ export class Router {
      */
     addRoutesMap(routes: Map<string, Route>) {
         for (var id of routes.keys()) {
-            this.map.set(id, routes.get(id));
-            document.getElementById(id).addEventListener('click', this.clickListener());
+            this.addSingleRoute(routes.get(id));
         }
     }
 
@@ -87,9 +88,21 @@ export class Router {
      * @param func callback
      */
     addRoute(source: string, target: string, path: string, func: () => any) {
-        this.map.set(source, new Route(source, target, path, func));
-        document.getElementById(source).addEventListener('click', this.clickListener());
+        this.addSingleRoute(new Route(source, target, path, func));
     }
+    /**
+     * 
+     * @param route route object added to the RouterMap
+     */
+    addSingleRoute(route: Route) {
+        this.map.set(route.source, route);
+        var node = document.getElementById(route.source);
+        if (node != undefined) {
+            node.addEventListener('click', this.clickListener());
+            node.setAttribute('href', '#' + route.source);
+        }
+    };
+
 
 }
 
