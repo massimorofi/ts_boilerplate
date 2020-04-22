@@ -74,3 +74,5 @@ var settings = {
 Resources:
 - The build has been inspired by [adaminstdead/boilerplate](https://github.com/adamisntdead/boilerplate)
 - Typescript resources: [TypeScript HandBook](https://github.com/microsoft/TypeScript-Handbook)
+- RSS feed creator (registration required): [rss.app](https://rss.app/rss-feed/webpage-to-rss)
+- RSS feed validator:[RSS Validator](https://validator.w3.org/feed/)

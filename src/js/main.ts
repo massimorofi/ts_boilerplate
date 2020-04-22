@@ -1,16 +1,21 @@
 import { Router } from './routing/Router';
-import { MyGraph } from './pages/pageA'
+import { MyGraph } from './pages/pageA';
+import { PageC } from './pages/pageC';
 
+
+var mainRouter = new Router();
 /**
  * Add dynamically sections to the main DOM
  */
 function addSections() {
-    var r = new Router();
+
     var graph = new MyGraph();
     //add routes (<ID>: source html element, <HTML Element>: destination html element ID, <Path to HTML File>,<Function>));
-    r.addRoute('pagea', 'panel', 'html/a.html', () => { graph.drawChart() });
-    r.addRoute('pageb', 'panel', 'html/b.html', null);
-    r.addRoute('pagec', 'panel', 'html/c.html', null);
+    mainRouter.addRoute('pagea', 'panel', 'html/a.html', () => { graph.drawChart() });
+    mainRouter.addRoute('pageb', 'panel', 'html/b.html', null);
+    mainRouter.addRoute('pagec', 'panel', 'html/c.html', () => {
+        PageC.loadFeeds(['https://news.yahoo.com/rss/popularstories?s=covid'], 20);
+    });
 }
 
 var open = false;
@@ -23,12 +28,26 @@ function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
 
+
+async function setInitPage() {
+    const targetPage = window.location.href.split('#')[1];
+    if (targetPage != undefined) {
+        console.log('Setting main Page:::' + targetPage);
+        mainRouter.route(targetPage);
+    }
+    else {
+        mainRouter.route('pagec');
+    }
+}
+
 function main() {
     addSections();
     // set eventlisteners
     document.getElementById('open-btn').addEventListener('click', () => { openNav() });
     document.getElementById('close-btn').addEventListener('click', () => { closeNav() });
     document.getElementById('mySidenav').addEventListener('click', () => { closeNav() });
+    // Init main page
+    setInitPage();
 }
 
 // run main function
