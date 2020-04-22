@@ -2,7 +2,7 @@ import { Router } from './routing/Router';
 import { MyGraph } from './pages/pageA';
 import { PageC } from './pages/pageC';
 
-
+var $ = require('jquery');
 var mainRouter = new Router();
 /**
  * Add dynamically sections to the main DOM
@@ -38,7 +38,10 @@ async function setInitPage() {
     else {
         mainRouter.route('pagec');
     }
-}
+};
+
+
+
 
 function main() {
     addSections();
@@ -48,7 +51,7 @@ function main() {
     document.getElementById('mySidenav').addEventListener('click', () => { closeNav() });
     // Init main page
     setInitPage();
-}
+};
 
 // run main function
 main();

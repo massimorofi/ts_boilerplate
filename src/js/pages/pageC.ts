@@ -19,7 +19,7 @@ export class PageC {
         RemoteLoader.loadFile(url, 'text/xml', (xobj: XMLHttpRequest) => {
             var rss = (new DOMParser()).parseFromString(xobj.responseText, 'text/xml');
             var items = rss.getElementsByTagName('item');
-            console.log(items[0]);
+            //console.log(items[0]);
             var l = items.length;
             if (l > max) {
                 l = max;
@@ -31,7 +31,7 @@ export class PageC {
                 var link = element.getElementsByTagName('link')[0].childNodes[0].textContent;
                 var pubDate = element.getElementsByTagName('pubDate')[0].childNodes[0].textContent;
                 var card = `
-                <div class="card shadow-lg rounded mx-auto my-auto" style="max-width: 18rem;" >
+                <div id="news-card" class="card rounded mx-auto my-auto shadow-lg" style="max-width: 24rem;" >
                 <div class="card-header">
                    <strong><a href="${link}" target="_blank" class="card-link"> ${title}</a></strong>
                 </div>
@@ -42,8 +42,6 @@ export class PageC {
                 </div>`;
                 $(group).append(card);
             }
-
-
         })
     };
 
@@ -58,4 +56,5 @@ export class PageC {
         }
         return tag[0].childNodes[0].textContent;
     }
+
 }
