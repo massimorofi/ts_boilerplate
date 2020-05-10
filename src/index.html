@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>RoutingTest</title>
+    <title>TDs BOILERPLATE</title>
+    <meta name="description" content="TypeScript Boilerplate starter ">
+    <meta name="keywords" content="typescrypt, boilerplate, development, opensource">
+
     <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
     <!-- inject:css -->
@@ -12,22 +15,31 @@
 </head>
 
 <body>
-
-    <!--TEST-->
-    <!--END TEST-->
-    <div class="container-fluid">
+    <!-- PAGE Content header/main/footer -->
+    <header>
+        <!--Navigation Menu-->
         @@include('html/sections/navigation.html')
-        <br>
-        <div class="row" id="panel">
+    </header>
+
+    <!--Main Container-->
+    <main>
+        <!--Main layout-->
+        <div class="container" id="panel">
+            <!--Dynamic Content loaded >>>HERE<<< via navigation and routing-->
         </div>
-    </div>
+    </main>
+
+    <!--Footer-->
+    <footer class="py-5 bg-dark">
+        @@include('html/sections/footer.html')
+    </footer>
 
 
     <!--LOADING SCRIPTS-->
-    <!--script src="js/bundle.js"></script-->
+
+    <!-- inject:js -->
+    <!-- endinject -->
 
 </body>
-<!-- inject:js -->
-<!-- endinject -->
 
 </html>

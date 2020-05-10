@@ -36,7 +36,7 @@ async function setInitPage() {
         mainRouter.route(targetPage);
     }
     else {
-        mainRouter.route('pagec');
+        mainRouter.route('pageb');
     }
 };
 
